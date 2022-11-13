@@ -1,71 +1,73 @@
-function getComputerChoice() {
-    const x = Math.floor(Math.random() * 3)
-    if (x === 0) {
-        return 'rock';
-    } else if (x === 1) {
-        return 'paper';
-    } else {
-        return 'scissors';
-    }
-}
 
-const playerSelection = 'RoCk'.toLowerCase();
-const computerSelection = getComputerChoice();
-
-function gameRound() {
-    if (playerSelection === computerSelection) {
-        return 'Tie';
-    } else if (playerSelection === 'rock') {
-        if (computerSelection === 'paper') {
-            return 'You lost - paper beats rock';
+// listen to "click" to grab what user choose 
+buttons = document.querySelectorAll('.btn');
+buttons.forEach(btn => {
+    btn.addEventListener('click', event => {
+        const playerSelection = event.target.id.toLowerCase();
+        function getComputerChoice() {
+            const x = Math.floor(Math.random() * 3)
+            if (x === 0) {
+                return 'rock';
+            } else if (x === 1) {
+                return 'paper';
+            } else {
+                return 'scissors';
+            }
         }
-        if (computerSelection === 'scissors') {
-            return 'You won - rock beats scissors';
+        const computerSelection = getComputerChoice();
+        console.log(playerSelection);
+        console.log(computerSelection);
+        function gameRound() {
+            if (playerSelection === computerSelection) {
+                return 'Tie';
+            } else if (playerSelection === 'rock') {
+                if (computerSelection === 'paper') {
+                    return 'You lost - paper beats rock';
+                }
+                if (computerSelection === 'scissors') {
+                    return 'You won - rock beats scissors';
+                }
+
+            } else if (playerSelection === 'paper') {
+                if (computerSelection === 'scissors') {
+                    return 'You lost - scissors beat paper';
+                }
+                if (computerSelection === 'rock') {
+                    return 'You won - paper beats rock';
+                }
+            } else {
+                if (computerSelection === 'rock') {
+                    return 'You lost - rock beats scissors';
+                }
+                if (computerSelection === 'paper') {
+                    return 'You won - scissors beat paper';
+                }
+            }
         }
-
-    } else if (playerSelection === 'paper') {
-        if (computerSelection === 'scissors') {
-            return 'You lost - scissors beat paper';
-        }
-        if (computerSelection === 'rock') {
-            return 'You won - paper beats rock';
-        }
-    } else {
-        if (computerSelection === 'rock') {
-            return 'You lost - rock beats scissors';
-        }
-        if (computerSelection === 'paper') {
-            return 'You won - scissors beat paper';
-        }
-    }
-}
-
-
-
-
-
-
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-    for (let i = 0; i < 5; i++) {
+        console.log(gameRound(playerSelection));
         if (gameRound().substring(4, 5) == 'w') {
-            playerScore += 1;
-        } else if (gameRound().substring(4, 5) == 'l'){
-            computerScore += 1;
+            document.getElementById('playerScore').innerHTML++;
+        } else if (gameRound().substring(4, 5) == 'l') {
+            document.getElementById('computerScore').innerHTML++;
         } else {
-            null;
+            return;
         }
-    }
-    if (playerScore > computerScore) {
-        return 'You won the series!';
-    }
-    else if (playerScore < computerScore) {
-        return 'You lost the series!';
-    }
-    else {
-        return 'Tie!';
-    }
-}
-
-console.log(game());
+        const ps = (document.getElementById('playerScore').innerHTML);
+        const cs = (document.getElementById('computerScore').innerHTML);
+        if (ps >= 5) {
+            setTimeout(() => {
+                alert('You are the winner');
+                document.getElementById('playerScore').innerHTML *= 0;
+                document.getElementById('computerScore').innerHTML *= 0;
+            }, 2)
+        } else if (cs >= 5) {
+            setTimeout(() => {
+                alert('Computer is the winner');
+                document.getElementById('playerScore').innerHTML *= 0;
+                document.getElementById('computerScore').innerHTML *= 0;
+            }, 2)
+        } else {
+            return;
+        }
+    })
+})
